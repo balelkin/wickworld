@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WickWorld — Створюй, вивчай, ділись</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ============ NAVBAR ============ -->
+<header class="navbar">
+  <div class="wrap">
+    <a href="#" class="brand"><span class="mascot">🐱</span>WickWorld</a>
+    <ul class="nav-links">
+      <li><a href="#" onclick="showToast('✏️ Створити новий проєкт')">Створити</a></li>
+      <li><a href="#gallery" onclick="showToast('🧭 Дослідження проєктів')">Досліджувати</a></li>
+      <li><a href="#" onclick="showToast('💡 Ідеї для натхнення')">Ідеї</a></li>
+      <li><a href="#" onclick="showToast('📁 Твої проєкти')">Проєкти</a></li>
+      <li><a href="#" onclick="showToast('ℹ️ Про Wick Editor')">Про Wick Editor <i class="fas fa-chevron-down" style="font-size:11px;"></i></a></li>
+    </ul>
+    <div class="nav-search"><i class="fas fa-search"></i><input type="text" placeholder="Пошук"></div>
+    <div class="nav-right">
+      <a href="#" class="nav-login" onclick="showToast('🔐 Вхід до акаунту')">Увійти</a>
+      <button class="btn-join" onclick="showToast('🎉 Ласкаво просимо до WickWorld!')">Приєднатися <i class="fas fa-user-astronaut"></i></button>
+    </div>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="hero-wrap">
+
+    <div class="hero-text">
+      <h1>Творити,<br>вивчати,<br>ділитись</h1>
+      <p>Створюй захопливі анімації та ігри за допомогою Wick Editor. Ділись своїми проєктами та надихай інших!</p>
+      <div class="hero-buttons">
+        <button class="btn btn-primary" onclick="showToast('🛠 Відкрито редактор проєкту')"><i class="fas fa-pen"></i> Створити проєкт</button>
+        <button class="btn btn-ghost" onclick="showToast('📖 Більше про Wick Editor')"><i class="fas fa-play"></i> Дізнатися більше</button>
+      </div>
+    </div>
+
+    <div class="hero-side">
+      <div class="side-item">
+        <div class="side-icon i1"><i class="fas fa-face-smile"></i></div>
+        <div><h3>Просто та весело</h3><p>Інтуїтивний редактор для створення анімацій та ігор.</p></div>
+      </div>
+      <div class="side-item">
+        <div class="side-icon i2"><i class="fas fa-graduation-cap"></i></div>
+        <div><h3>Навчайся граючись</h3><p>Покрокові уроки та приклади допоможуть тобі стати майстром анімацій.</p></div>
+      </div>
+      <div class="side-item">
+        <div class="side-icon i3"><i class="fas fa-globe"></i></div>
+        <div><h3>Ділись з друзями</h3><p>Публікуй свої проєкти, отримуй відгуки та надихай спільноту.</p></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<main class="wrap" id="gallery">
+
+  <!-- ============ НОВІ ПРОЄКТИ ============ -->
+  <section class="section">
+    <div class="section-head">
+      <h2><i class="fas fa-star" style="color:#8b5cf6;"></i> Нові проєкти</h2>
+      <a href="#" class="see-all" onclick="showToast('📂 Всі нові проєкти')">Показати всі</a>
+    </div>
+    <div class="scroll-row">
+      <div class="scroll-track" id="rowNew"></div>
+      <button class="scroll-next" onclick="scrollRow('rowNew')"><i class="fas fa-chevron-right"></i></button>
+    </div>
+  </section>
+
+  <!-- ============ НАЙПОПУЛЯРНІШІ ============ -->
+  <section class="section">
+    <div class="section-head">
+      <h2><i class="fas fa-fire" style="color:#f0924a;"></i> Найпопулярніші</h2>
+      <a href="#" class="see-all" onclick="showToast('🔥 Весь рейтинг')">Показати всі</a>
+    </div>
+    <div class="scroll-row">
+      <div class="scroll-track" id="rowPopular"></div>
+      <button class="scroll-next" onclick="scrollRow('rowPopular')"><i class="fas fa-chevron-right"></i></button>
+    </div>
+  </section>
+
+  <!-- ============ РЕМІКСИ + ЛАБОРАТОРІЯ ============ -->
+  <section class="section two-col">
+    <div>
+      <div class="section-head">
+        <h2><i class="fas fa-retweet" style="color:#22a06b;"></i> Ремікси</h2>
+        <a href="#" class="see-all" onclick="showToast('🔄 Всі ремікси')">Показати всі</a>
+      </div>
+      <div class="mini-grid" id="rowRemix"></div>
+    </div>
+    <div>
+      <div class="section-head">
+        <h2><i class="fas fa-flask" style="color:#4a7cf7;"></i> Лабораторія</h2>
+        <a href="#" class="see-all" onclick="showToast('🧪 Вся лабораторія')">Показати всі</a>
+      </div>
+      <div class="mini-grid" id="rowLab"></div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-left">
+      <span class="mascot">🐱</span>
+      <div><h4>Спільнота WickWorld</h4><p>Твори разом з нами!</p></div>
+    </div>
+    <div class="footer-stats">
+      <div class="stat"><i class="fas fa-users"></i><div><b>125,430</b><span>учасників</span></div></div>
+      <div class="stat"><i class="fas fa-rocket"></i><div><b>356,782</b><span>проєктів</span></div></div>
+      <div class="stat"><i class="fas fa-comment-dots"></i><div><b>2,147,893</b><span>коментарів</span></div></div>
+    </div>
+    <div class="footer-links">
+      <a href="#" onclick="showToast('ℹ️ Про нас')">Про нас</a>
+      <a href="#" onclick="showToast('👪 Для батьків')">Для батьків</a>
+      <a href="#" onclick="showToast('📜 Правила спільноти')">Правила спільноти</a>
+      <a href="#" onclick="showToast('❓ Допомога')">Допомога</a>
+    </div>
+    <div class="lang-select">Українська <i class="fas fa-chevron-down" style="font-size:11px;"></i></div>
+  </div>
+</footer>
+
+<div id="toast" class="toast"></div>
+
+<script>
+  function showToast(message){
+    const toast = document.getElementById('toast');
+    toast.textContent = message;
+    toast.classList.add('show');
+    clearTimeout(toast._timer);
+    toast._timer = setTimeout(()=>toast.classList.remove('show'), 2000);
+  }
+  function scrollRow(id){
+    const el = document.getElementById(id);
+    el.scrollBy({left: 340, behavior:'smooth'});
+  }
+
+  const gradients = [
+    'linear-gradient(135deg,#3b82f6,#1e3a8a)',
+    'linear-gradient(135deg,#8b5cf6,#3b2f8f)',
+    'linear-gradient(135deg,#22c1c3,#1a6fa0)',
+    'linear-gradient(135deg,#34c98d,#1f7a52)',
+    'linear-gradient(135deg,#f97316,#c2410c)',
+    'linear-gradient(135deg,#ec4899,#a21caf)',
+    'linear-gradient(135deg,#facc15,#d97706)',
+    'linear-gradient(135deg,#60a5fa,#2563eb)'
+  ];
+
+  const newProjects = [
+    {t:'Робот у місті', a:'PixelKid', icon:'🤖', g:0},
+    {t:'Космічна пригода', a:'StarDreamer', icon:'🚀', g:1},
+    {t:'Підводний світ', a:'AquaNika', icon:'🐠', g:2},
+    {t:'Платформер: Ліс', a:'GameCraftUA', icon:'🌲', g:3},
+    {t:'Магічний олівець', a:'ArtFlow', icon:'✏️', g:6},
+    {t:'Танцюючі фрукти', a:'FruitJam', icon:'🍓', g:4},
+    {t:'Перегони равликів', a:'TurboSnail', icon:'🐌', g:3},
+    {t:'Мій перший мультфільм', a:'LittleAnimator', icon:'🎬', g:0},
+  ];
+
+  const popular = [
+    {t:'Пригоди котика', a:'MeowMaster', icon:'🐱', g:6, likes:'2.1K', views:'18.7K'},
+    {t:'Врятуй планету', a:'EcoHero', icon:'🌍', g:3, likes:'1.8K', views:'14.3K'},
+    {t:'Зоряний захисник', a:'GalaxyBoy', icon:'🦸', g:1, likes:'1.6K', views:'12.5K'},
+    {t:'Лабіринт', a:'MazeRunner', icon:'🌀', g:2, likes:'1.4K', views:'10.8K'},
+    {t:'Дракон і лицар', a:'EpicTales', icon:'🐉', g:4, likes:'1.3K', views:'9.7K'},
+    {t:'Музичний мікс', a:'BeatMaker', icon:'🎧', g:1, likes:'1.2K', views:'8.9K'},
+    {t:'Пінгвін на льоді', a:'SnowyMind', icon:'🐧', g:2, likes:'1.1K', views:'8.2K'},
+    {t:'Чарівний ліс', a:'ForestLight', icon:'🌳', g:3, likes:'1K', views:'7.6K'},
+  ];
+
+  const remixes = [
+    {t:'Ремікс: Космічна пригода', from:'SpaceFan', to:'StarDreamer', icon:'🚀', g:1},
+    {t:'Ремікс: Платформер', from:'CodeMaster', to:'GameCraftUA', icon:'🌲', g:3},
+    {t:'Ремікс: Музичний мікс', from:'DJCat', to:'BeatMaker', icon:'🎧', g:5},
+    {t:'Ремікс: Дракон і лицар', from:'BraveKnight', to:'EpicTales', icon:'🐉', g:4},
+  ];
+
+  const labs = [
+    {t:'Як зробити анімацію', sub:'Покроковий посібник', icon:'🎞️', g:4},
+    {t:'Створи свою гру', sub:'Основи геймдизайну', icon:'🎮', g:3},
+    {t:'Робота зі звуком', sub:'Додаємо музику та ефекти', icon:'🎵', g:2},
+    {t:'Малюй та анімуй', sub:'Інструменти малювання', icon:'🎨', g:6},
+  ];
+
+  function buildProjectCard(p){
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.onclick = () => showToast(`📁 ${p.t} — ${p.a}`);
+    card.innerHTML = `
+      <div class="thumb" style="background:${gradients[p.g]}">${p.icon}</div>
+      <div class="card-body">
+        <div class="title">${p.t}</div>
+        <div class="author"><i class="fas fa-user-circle"></i>${p.a}</div>
+      </div>`;
+    return card;
+  }
+
+  function buildPopularCard(p){
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.onclick = () => showToast(`🔥 ${p.t} — ${p.a}`);
+    card.innerHTML = `
+      <div class="thumb" style="background:${gradients[p.g]}">${p.icon}
+        <span class="stat-pill"><span><i class="fas fa-heart"></i>${p.likes}</span><span><i class="fas fa-eye"></i>${p.views}</span></span>
+      </div>
+      <div class="card-body">
+        <div class="title">${p.t}</div>
+        <div class="author"><i class="fas fa-user-circle"></i>${p.a}</div>
+      </div>`;
+    return card;
+  }
+
+  function buildRemixCard(r){
+    const card = document.createElement('div');
+    card.className = 'remix-card';
+    card.onclick = () => showToast(`🔄 ${r.t}`);
+    card.innerHTML = `
+      <div class="thumb" style="background:${gradients[r.g]}">${r.icon}</div>
+      <div class="card-body">
+        <div class="title">${r.t}</div>
+        <div class="flow"><i class="fas fa-user"></i>${r.from} <i class="fas fa-arrow-right"></i> ${r.to}</div>
+      </div>`;
+    return card;
+  }
+
+  function buildLabCard(l){
+    const card = document.createElement('div');
+    card.className = 'remix-card lab-card';
+    card.onclick = () => showToast(`📘 ${l.t}`);
+    card.innerHTML = `
+      <div class="thumb" style="background:${gradients[l.g]}">${l.icon}</div>
+      <div class="card-body">
+        <div class="title">${l.t}</div>
+        <div class="flow">${l.sub}</div>
+      </div>`;
+    return card;
+  }
+
+  const rowNew = document.getElementById('rowNew');
+  newProjects.forEach(p => rowNew.appendChild(buildProjectCard(p)));
+
+  const rowPopular = document.getElementById('rowPopular');
+  popular.forEach(p => rowPopular.appendChild(buildPopularCard(p)));
+
+  const rowRemix = document.getElementById('rowRemix');
+  remixes.forEach(r => rowRemix.appendChild(buildRemixCard(r)));
+
+  const rowLab = document.getElementById('rowLab');
+  labs.forEach(l => rowLab.appendChild(buildLabCard(l)));
+
+  console.log('WickWorld завантажено! Клікайте на будь-який елемент.');
+</script>
+
+</body>
+</html>
