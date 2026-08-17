@@ -1,7 +1,6 @@
 import { useTranslations } from "next-intl";
 
 import { PRODUCT_LIMITS } from "@/shared/config/routes";
-import { isSupabaseConfigured } from "@/shared/config/env";
 import { PageHeader } from "@/shared/ui";
 
 import type { Project } from "../types";
@@ -15,7 +14,6 @@ export type ProjectListProps = {
 
 export function ProjectList({ projects }: ProjectListProps) {
   const t = useTranslations("projects");
-  const configured = isSupabaseConfigured();
 
   return (
     <div>
@@ -27,11 +25,6 @@ export function ProjectList({ projects }: ProjectListProps) {
         })}
         actions={<CreateProjectButton />}
       />
-      {!configured ? (
-        <p className="mb-6 rounded-xl bg-amber-50 px-4 py-3 text-sm font-semibold text-amber-800">
-          {t("errors.notConfigured")}
-        </p>
-      ) : null}
       {projects.length === 0 ? (
         <p className="rounded-[20px] border border-dashed border-[#c9d8fb] bg-white px-4 py-10 text-center text-[#5a6b8c] sm:px-6 sm:py-12">
           {t("empty")}

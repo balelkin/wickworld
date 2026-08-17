@@ -3,7 +3,6 @@
 import { useActionState } from "react";
 import { useTranslations } from "next-intl";
 
-import { isSupabaseConfigured } from "@/shared/config/env";
 import { Button } from "@/shared/ui";
 
 import { createProjectAction, type ProjectActionState } from "../actions";
@@ -16,12 +15,11 @@ export function CreateProjectButton() {
     createProjectAction,
     initialState,
   );
-  const configured = isSupabaseConfigured();
 
   return (
     <form action={formAction} className="flex flex-col items-end gap-2">
       <input type="hidden" name="title" value={t("defaultTitle")} />
-      <Button type="submit" disabled={!configured || pending}>
+      <Button type="submit" disabled={pending}>
         {pending ? t("creating") : t("create")}
       </Button>
       {state.error ? (

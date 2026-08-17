@@ -5,7 +5,6 @@ import { useTranslations } from "next-intl";
 
 import { Link } from "@/i18n/navigation";
 import { routes } from "@/shared/config/routes";
-import { isSupabaseConfigured } from "@/shared/config/env";
 import { Button, TextField } from "@/shared/ui";
 
 import {
@@ -24,7 +23,6 @@ export function AuthForm({ mode }: AuthFormProps) {
   const t = useTranslations("auth");
   const action = mode === "login" ? signInAction : signUpAction;
   const [state, formAction, pending] = useActionState(action, initialState);
-  const configured = isSupabaseConfigured();
 
   return (
     <section className="w-full max-w-md rounded-[20px] border border-[#e7edf9] bg-[#f8faff] p-5 sm:p-8">
@@ -34,12 +32,6 @@ export function AuthForm({ mode }: AuthFormProps) {
       <p className="mt-3 text-[#5a6b8c]">
         {mode === "login" ? t("loginDescription") : t("registerDescription")}
       </p>
-
-      {!configured ? (
-        <p className="mt-4 rounded-xl bg-amber-50 px-3 py-2 text-sm font-semibold text-amber-800">
-          {t("errors.notConfigured")}
-        </p>
-      ) : null}
 
       {state.error ? (
         <p className="mt-4 text-sm font-semibold text-red-600">
@@ -78,7 +70,7 @@ export function AuthForm({ mode }: AuthFormProps) {
           required
           minLength={8}
         />
-        <Button type="submit" disabled={!configured || pending}>
+        <Button type="submit" disabled={pending}>
           {pending ? t("pending") : mode === "login" ? t("submitLogin") : t("submitRegister")}
         </Button>
       </form>

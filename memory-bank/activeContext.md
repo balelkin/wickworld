@@ -9,7 +9,7 @@
 - Next.js 16, модулі, next-intl (`uk` default, `en` з префіксом).
 - Supabase Auth (email+пароль) + CRUD проєктів: SQL, RLS, cookies, захист `/projects`.
 - Сторінки: `/`, `/login`, `/register`, `/projects`, `/projects/[id]/edit` (заглушка редактора).
-- Без `.env.local` застосунок збирається; форми показують «не налаштовано».
+- Без `.env.local` застосунок збирається; у UI немає підказок про ключі чи БД.
 
 **Далі:** людина створює проєкт Supabase (див. `supabase/README.md`). Потім форк Wick + Save/Load.
 

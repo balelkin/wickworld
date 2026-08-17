@@ -61,7 +61,7 @@
     "submitLogin": "Увійти",
     "submitRegister": "Створити акаунт",
     "errors": {
-      "notConfigured": "Supabase ще не налаштований. Додай ключі в .env.local (див. supabase/README.md).",
+      "notConfigured": "Зараз не виходить. Спробуй трохи пізніше.",
       "missingFields": "Заповни всі поля.",
       "invalidCredentials": "Невірний email або пароль.",
       "passwordShort": "Пароль має бути щонайменше 8 символів.",
@@ -85,7 +85,7 @@
     "delete": "Видалити",
     "confirmDelete": "Видалити цей проєкт? Це не можна скасувати.",
     "errors": {
-      "notConfigured": "Supabase ще не налаштований. Додай ключі в .env.local.",
+      "notConfigured": "Зараз не виходить. Спробуй трохи пізніше.",
       "createFailed": "Не вдалося створити проєкт.",
       "limitReached": "Досягнуто ліміт проєктів.",
       "missingTitle": "Назва не може бути порожньою.",

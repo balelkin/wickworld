@@ -61,7 +61,7 @@
     "submitLogin": "Log in",
     "submitRegister": "Create account",
     "errors": {
-      "notConfigured": "Supabase is not configured. Add keys to .env.local (see supabase/README.md).",
+      "notConfigured": "That didn’t work. Try again in a moment.",
       "missingFields": "Please fill in all fields.",
       "invalidCredentials": "Wrong email or password.",
       "passwordShort": "Password must be at least 8 characters.",
@@ -85,7 +85,7 @@
     "delete": "Delete",
     "confirmDelete": "Delete this project? This cannot be undone.",
     "errors": {
-      "notConfigured": "Supabase is not configured. Add keys to .env.local.",
+      "notConfigured": "That didn’t work. Try again in a moment.",
       "createFailed": "Could not create the project.",
       "limitReached": "Project limit reached.",
       "missingTitle": "Title cannot be empty.",
