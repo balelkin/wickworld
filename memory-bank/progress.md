@@ -13,6 +13,16 @@
 
 ---
 
+## 2026-08-18 — push GitHub + Vercel
+
+- Задача: опублікувати MVP на `balelkin/wickworld` і задеплоїти.
+- Зроблено: коміт порталу, `origin` → `git@github.com:balelkin/wickworld.git`, production Vercel, GitHub підключено.
+- Перевірка: push `main` OK; Vercel build OK; alias `https://wickworld.vercel.app`.
+- Memory bank: tech (репо), active (деплой).
+- Далі: ключі Supabase в Vercel Env + SQL; потім форк Wick.
+
+---
+
 ## 2026-08-17 — Auth + CRUD проєктів
 
 - Задача: `docs/tasks/2026-08-17-auth-and-projects.md`

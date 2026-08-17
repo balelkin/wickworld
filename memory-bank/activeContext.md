@@ -13,5 +13,7 @@
 
 **Далі:** людина створює проєкт Supabase (див. `supabase/README.md`). Потім форк Wick + Save/Load.
 
-**Блокери:** локальний Auth не працює, поки немає URL + anon key у `.env.local` і виконаного SQL.
+**Блокери:** Auth на проді не працює, поки в Vercel немає `NEXT_PUBLIC_SUPABASE_URL` і `NEXT_PUBLIC_SUPABASE_ANON_KEY`, а в Supabase — виконаний SQL.
+
+**Деплой:** https://wickworld.vercel.app — GitHub `balelkin/wickworld` підключений до Vercel.
 
