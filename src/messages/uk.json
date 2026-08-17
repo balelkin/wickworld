@@ -95,8 +95,9 @@
   "editor": {
     "metaTitle": "Редактор",
     "pageTitle": "Редактор проєкту",
-    "pageDescription": "Хмарний Save/Load зʼявиться після форку Wick і API Storage.",
+    "pageDescription": "Малюй у Wick. Save зберігає проєкт у хмару WickWorld.",
     "label": "Редактор",
+    "back": "До проєктів",
     "notConnected": "Wick Editor ще не підключений",
     "notConnectedBody": "Тут буде iframe з нашим білдом форку. Save/Load піде через типізований протокол wickworld:*."
   },

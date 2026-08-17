@@ -6,7 +6,7 @@ export const WICKWORLD_PROTOCOL_VERSION = 1 as const;
 
 export type WickworldRequestId = string;
 
-type Envelope<TType extends string, TPayload = Record<string, never>> = {
+type Envelope<TType extends string, TPayload extends object = object> = {
   readonly protocolVersion: typeof WICKWORLD_PROTOCOL_VERSION;
   readonly type: TType;
   readonly requestId: WickworldRequestId;

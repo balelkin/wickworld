@@ -13,6 +13,26 @@
 
 ---
 
+## 2026-08-18 — Wick iframe + Save/Load
+
+- Задача: `docs/tasks/2026-08-18-wick-save-load.md`
+- Зроблено: міст у форку; vendor `gh-pages` → `/editor`; EditorHost + API file/save; cloud save лише після load.
+- Перевірка: `npm run lint` OK, `npm run typecheck` OK, `npm run build` OK.
+- Memory bank: active, tech.
+- Далі: пуш; ключі Supabase; ручний тест Save/Load.
+
+---
+
+## 2026-08-18 — форк Wick Editor
+
+- Задача: `docs/tasks/2026-08-18-wick-editor-fork.md`
+- Зроблено: https://github.com/balelkin/wick-editor від Wicklets/wick-editor, default branch only, SHA `f34f0d9512d7165e74c1910ea1aba9173ab8dec2`.
+- Перевірка: `gh repo view` isFork=true, parent=Wicklets/wick-editor, GPL-3.0.
+- Memory bank: ADR-007, tech, active.
+- Далі: міст Save/Load у форку; білд `/editor` у порталі. Не auto-merge upstream.
+
+---
+
 ## 2026-08-18 — без технічних підказок у UI
 
 - Задача: прибрати з екранів згадки про непідключену БД / `.env`.

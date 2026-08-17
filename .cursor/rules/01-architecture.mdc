@@ -6,7 +6,7 @@ alwaysApply: true
 # Інваріанти
 
 - Портал: Next.js App Router + TypeScript + Supabase + Vercel.
-- Редактор: окремий форк `gromko/wick-editor` (upstream: Wicklets/wick-editor). Статичний білд на `/editor`. Iframe на тому ж домені.
+- Редактор: окремий форк `balelkin/wick-editor` (upstream: Wicklets/wick-editor). Статичний білд на `/editor`. Iframe на тому ж домені.
 - Save/Load: тільки хук `window.saveFileFromWick` + `postMessage`. Не iframe wickeditor.com. Не переписувати ядро Wick.
 - Save в хмару лише після успішного Load.
 - Форк Wick не auto-merge з upstream. Версію пінити.

@@ -41,8 +41,8 @@
 
 ## 3. Архітектура: два репозиторії
 
-- `gromko/wickworld` — портал (Next.js + Supabase)
-- `gromko/wick-editor` — форк Wicklets/wick-editor + наш міст Save/Load
+- `balelkin/wickworld` — портал (Next.js + Supabase)
+- `balelkin/wick-editor` — форк Wicklets/wick-editor + наш міст Save/Load
 
 Офіційний репозиторій [Wicklets/wick-editor](https://github.com/Wicklets/wick-editor) залишається **upstream** — джерело оновлень. Ми не пушимо в їхній репо.
 
@@ -113,7 +113,7 @@ Wick Editor — GNU GPL v3.
 
 | # | Функція | Деталі |
 |---|---------|--------|
-| 1.1 | Fork Wick Editor | `gromko/wick-editor` від Wicklets, upstream налаштовано, версія зафіксована |
+| 1.1 | Fork Wick Editor | `balelkin/wick-editor` від Wicklets, upstream налаштовано, версія зафіксована |
 | 1.2 | Міст Save/Load | Override `saveFileFromWick` + Load через postMessage |
 | 1.3 | Перевірка циклу | Load → малювання → Save → reload → малюнок на місці |
 | 1.4 | Next.js scaffold | App Router, TypeScript, клієнт Supabase |
@@ -215,7 +215,7 @@ Wick Editor — GNU GPL v3.
 ## 10. Наступні кроки після схвалення плану
 
 - [ ] Команда схвалює план
-- [ ] Створити fork `gromko/wick-editor`
+- [x] Створити fork `balelkin/wick-editor`
 - [ ] Міст Save/Load і перевірка циклу збереження
 - [ ] Scaffold Next.js + Supabase
 - [ ] Перенести HTML-макет у Next.js (головна сторінка)

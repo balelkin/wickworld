@@ -1,19 +1,15 @@
-# Active context
+**Дата оновлення:** 2026-08-18
 
-**Дата оновлення:** 2026-08-17
-
-**Фаза:** етап 1 — Auth і кабінет проєктів (без Wick).
+**Фаза:** етап 1 — iframe Wick на `/editor`, Save/Load API є; хмара чекає ключі Supabase.
 
 **Зараз:**
 
-- Next.js 16, модулі, next-intl (`uk` default, `en` з префіксом).
-- Supabase Auth (email+пароль) + CRUD проєктів: SQL, RLS, cookies, захист `/projects`.
-- Сторінки: `/`, `/login`, `/register`, `/projects`, `/projects/[id]/edit` (заглушка редактора).
-- Без `.env.local` застосунок збирається; у UI немає підказок про ключі чи БД.
+- Форк: https://github.com/balelkin/wick-editor (міст `wickworld-bridge.js`).
+- Портал віддає статику `/editor` (vendor з Wick `gh-pages` + міст).
+- `GET/POST /api/projects/[id]/file|save`. Cloud Save лише після Load.
+- Auth на проді все ще потребує ключів Vercel.
 
-**Далі:** людина створює проєкт Supabase (див. `supabase/README.md`). Потім форк Wick + Save/Load.
+**Далі:** пуш порталу; ключі Supabase; ручний цикл намалював → Save → refresh.
 
-**Блокери:** Auth на проді не працює, поки в Vercel немає `NEXT_PUBLIC_SUPABASE_URL` і `NEXT_PUBLIC_SUPABASE_ANON_KEY`, а в Supabase — виконаний SQL.
-
-**Деплой:** https://wickworld.vercel.app — GitHub `balelkin/wickworld` підключений до Vercel.
+**Деплой:** https://wickworld.vercel.app
 

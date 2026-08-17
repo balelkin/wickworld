@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "prebuild": "node scripts/vendor-editor.mjs",
     "build": "next build",
+    "vendor-editor": "node scripts/vendor-editor.mjs",
     "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit"

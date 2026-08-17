@@ -95,8 +95,9 @@
   "editor": {
     "metaTitle": "Editor",
     "pageTitle": "Project editor",
-    "pageDescription": "Cloud Save/Load will land after the Wick fork and Storage API.",
+    "pageDescription": "Draw in Wick. Save stores the project in the WickWorld cloud.",
     "label": "Editor",
+    "back": "Back to projects",
     "notConnected": "Wick Editor is not connected yet",
     "notConnectedBody": "This is where the forked editor iframe will load. Save/Load will use the typed wickworld:* protocol."
   },

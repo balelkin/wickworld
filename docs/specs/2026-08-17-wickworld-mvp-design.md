@@ -39,8 +39,8 @@
 
 | Репо | Роль | Ліцензія |
 |------|------|----------|
-| `gromko/wickworld` | Next.js портал, API, деплой Vercel | наша (не GPL обовʼязково) |
-| `gromko/wick-editor` | форк Wicklets/wick-editor + міст | GPL v3 |
+| `balelkin/wickworld` | Next.js портал, API, деплой Vercel | наша (не GPL обовʼязково) |
+| `balelkin/wick-editor` | форк Wicklets/wick-editor + міст | GPL v3 |
 
 Офіційний Wick — тільки upstream. Пінимо коміт. Оновлення ручні.
 

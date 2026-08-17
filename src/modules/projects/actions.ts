@@ -121,6 +121,8 @@ export async function deleteProjectAction(projectId: string): Promise<void> {
     return;
   }
 
+  await client.value.storage.from("projects").remove([storagePathFor(user.userId, asProjectId(projectId))]);
+
   await client.value
     .from("projects")
     .delete()

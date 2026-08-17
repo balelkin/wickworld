@@ -3,7 +3,9 @@
 ## Репозиторії
 
 - `balelkin/wickworld` — цей репо, портал (https://github.com/balelkin/wickworld).
-- `gromko/wick-editor` — ще не створений. Форк https://github.com/Wicklets/wick-editor (GPL v3). Upstream не auto-merge.
+- Форк: `balelkin/wick-editor`, міст `public/wickworld-bridge.js`
+- Портал віддає `/editor` зі збірки Wick `gh-pages` + міст (`scripts/vendor-editor.mjs`, не комітити `public/editor`)
+- Пінований коміт джерела: `f34f0d9512d7165e74c1910ea1aba9173ab8dec2`. Upstream не auto-merge.
 
 ## Стек порталу
 

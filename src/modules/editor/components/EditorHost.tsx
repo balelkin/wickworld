@@ -1,36 +1,130 @@
+"use client";
+
+import { useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
 
 import type { ProjectId } from "@/shared/types";
+
+import {
+  isWickworldMessage,
+  WICKWORLD_PROTOCOL_VERSION,
+  type EditorToHostMessage,
+  type HostToEditorMessage,
+} from "../protocol";
 
 export type EditorHostProps = {
   readonly projectId: ProjectId;
   readonly editorSrc?: string;
 };
 
-/**
- * Iframe host. The Wick build will be served from `/editor` later.
- * Until the fork exists we render a documented placeholder.
- */
 export function EditorHost({
   projectId,
-  editorSrc = "/editor",
+  editorSrc = "/editor/",
 }: EditorHostProps) {
   const t = useTranslations("editor");
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const loadedRef = useRef(false);
+  const frameSrc = `${editorSrc}?projectId=${projectId}`;
+
+  useEffect(() => {
+    function post(message: HostToEditorMessage) {
+      const frame = iframeRef.current?.contentWindow;
+      if (!frame) {
+        return;
+      }
+      frame.postMessage(message, window.location.origin);
+    }
+
+    async function onReady() {
+      const response = await fetch(`/api/projects/${projectId}/file`, {
+        credentials: "include",
+      });
+
+      if (response.status === 404) {
+        loadedRef.current = true;
+        post({
+          protocolVersion: WICKWORLD_PROTOCOL_VERSION,
+          type: "wickworld:load-empty",
+          requestId: crypto.randomUUID(),
+        });
+        return;
+      }
+
+      if (!response.ok) {
+        return;
+      }
+
+      const wickBytes = await response.arrayBuffer();
+      loadedRef.current = true;
+      post({
+        protocolVersion: WICKWORLD_PROTOCOL_VERSION,
+        type: "wickworld:load",
+        requestId: crypto.randomUUID(),
+        wickBytes,
+      });
+    }
+
+    async function onSave(message: Extract<EditorToHostMessage, { type: "wickworld:save" }>) {
+      if (!loadedRef.current) {
+        post({
+          protocolVersion: WICKWORLD_PROTOCOL_VERSION,
+          type: "wickworld:save-ack",
+          requestId: message.requestId,
+          ok: false,
+          error: "loadIncomplete",
+        });
+        return;
+      }
+
+      const response = await fetch(`/api/projects/${projectId}/save`, {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/octet-stream" },
+        body: message.file,
+      });
+
+      post({
+        protocolVersion: WICKWORLD_PROTOCOL_VERSION,
+        type: "wickworld:save-ack",
+        requestId: message.requestId,
+        ok: response.ok,
+        error: response.ok ? undefined : "saveFailed",
+      });
+    }
+
+    function onMessage(event: MessageEvent) {
+      if (event.origin !== window.location.origin) {
+        return;
+      }
+      if (event.source !== iframeRef.current?.contentWindow) {
+        return;
+      }
+      if (!isWickworldMessage(event.data)) {
+        return;
+      }
+
+      const data = event.data as EditorToHostMessage;
+      if (data.type === "wickworld:ready") {
+        void onReady();
+      }
+      if (data.type === "wickworld:save") {
+        void onSave(data);
+      }
+    }
+
+    window.addEventListener("message", onMessage);
+    return () => window.removeEventListener("message", onMessage);
+  }, [projectId]);
 
   return (
-    <div className="flex min-h-[60vh] flex-col overflow-hidden rounded-[20px] border border-[#e7edf9] bg-[#0c1a3d] text-white sm:min-h-[70vh]">
-      <div className="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-3 text-sm sm:px-4">
-        <span className="truncate font-bold">
-          {t("label")} · {projectId}
-        </span>
-        <span className="hidden text-white/60 sm:inline">{editorSrc}</span>
-      </div>
-      <div className="flex flex-1 flex-col items-center justify-center gap-3 p-6 text-center sm:p-8">
-        <p className="font-[family-name:var(--font-display)] text-xl font-extrabold sm:text-2xl">
-          {t("notConnected")}
-        </p>
-        <p className="max-w-md text-sm text-white/70">{t("notConnectedBody")}</p>
-      </div>
+    <div className="flex min-h-0 flex-1 flex-col overflow-hidden bg-[#0c1a3d]">
+      <iframe
+        ref={iframeRef}
+        title={t("label")}
+        src={frameSrc}
+        className="h-full min-h-[70vh] w-full flex-1 border-0 bg-white"
+        allow="autoplay; clipboard-read; clipboard-write"
+      />
     </div>
   );
 }

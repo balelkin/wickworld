@@ -34,6 +34,8 @@ const eslintConfig = defineConfig([
     "next-env.d.ts",
     "docs/**",
     "memory-bank/**",
+    "public/editor/**",
+    ".cache/**",
   ]),
 ]);
 
