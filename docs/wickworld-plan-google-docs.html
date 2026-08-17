@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>WickWorld — план розробки</title>
+</head>
+<body>
+
+<p><b>WickWorld — план розробки</b></p>
+<p>Документ для обговорення з командою<br>
+Дата: 17 серпня 2026<br>
+Статус: чернетка для ревʼю</p>
+
+<h1>1. Що будуємо</h1>
+
+<p><b>WickWorld</b> — український дитячий освітній портал для створення анімацій та ігор на базі Wick Editor (<a href="https://github.com/Wicklets/wick-editor">github.com/Wicklets/wick-editor</a>).</p>
+
+<p><b>Девіз:</b> Творити, вивчати, ділитись.</p>
+
+<table border="1" cellpadding="6" cellspacing="0">
+  <tr>
+    <th>Стовп</th>
+    <th>Опис</th>
+  </tr>
+  <tr>
+    <td>Творити</td>
+    <td>Редактор Wick у браузері, проєкти зберігаються в хмарі</td>
+  </tr>
+  <tr>
+    <td>Вивчати</td>
+    <td>Уроки, лабораторії, покрокові завдання (пізніше)</td>
+  </tr>
+  <tr>
+    <td>Ділитись</td>
+    <td>Публічна галерея, ремікси (пізніше)</td>
+  </tr>
+</table>
+
+<p><b>Цільова аудиторія:</b> діти 9–16 років, українська мова інтерфейсу.</p>
+
+<p><b>Поточний стан:</b> у репозиторії є статичний HTML-макет головної сторінки (wickworld.html). Бекенду, акаунтів і редактора ще немає.</p>
+
+<h1>2. Технічний стек</h1>
+
+<table border="1" cellpadding="6" cellspacing="0">
+  <tr>
+    <th>Шар</th>
+    <th>Технологія</th>
+    <th>Навіщо</th>
+  </tr>
+  <tr>
+    <td>Портал (UI + API)</td>
+    <td>Next.js (App Router)</td>
+    <td>Full-stack у одному репо: сторінки, API routes, SSR</td>
+  </tr>
+  <tr>
+    <td>База даних</td>
+    <td>Supabase (PostgreSQL)</td>
+    <td>Метадані проєктів, користувачі, RLS</td>
+  </tr>
+  <tr>
+    <td>Файли (.wick)</td>
+    <td>Supabase Storage</td>
+    <td>Хмарне збереження анімацій</td>
+  </tr>
+  <tr>
+    <td>Авторизація</td>
+    <td>Supabase Auth</td>
+    <td>Реєстрація / вхід учнів</td>
+  </tr>
+  <tr>
+    <td>Хостинг</td>
+    <td>Vercel (Hobby)</td>
+    <td>Безкоштовний старт, auto-deploy з GitHub</td>
+  </tr>
+  <tr>
+    <td>Редактор</td>
+    <td>Fork Wick Editor</td>
+    <td>Окремий репозиторій. Білд редактора деплоїмо самі на наш домен (/editor), а не iframe з wickeditor.com</td>
+  </tr>
+</table>
+
+<p><b>Чому саме так:</b> без окремого API-сервера, безкоштовно на старті, швидкий MVP, зрозумілий шлях масштабування.</p>
+
+<h1>3. Архітектура: два репозиторії</h1>
+
+<ul>
+  <li><b>gromko/wickworld</b> — портал (Next.js + Supabase)</li>
+  <li><b>gromko/wick-editor</b> — форк Wicklets/wick-editor + наш міст Save/Load</li>
+</ul>
+
+<p>Офіційний репозиторій Wicklets/wick-editor залишається <b>upstream</b> — джерело оновлень. Ми не пушимо в їхній репо.</p>
+
+<p>Форк <b>не підтягує оновлення автоматично</b>. Wicklets може пушити в master — наш продакшен від цього не зміниться, поки ми самі не оновимо форк і не задеплоїмо його знову. Так і треба: автозлив може зламати Save/Load. Про нові релізи можна дізнатися через Watch на GitHub (краще «Releases»).</p>
+
+<h2>3.1. Як працює редактор</h2>
+
+<p>Wick Editor — окремий Create React App (React 16). Його <b>не вбудовуємо в Next.js як npm-пакет</b> — це технічно несумісно.</p>
+
+<p>Замість цього:</p>
+<ol>
+  <li>Збираємо форк Wick у статичний білд (npm run build).</li>
+  <li>Next.js віддає його з шляху /editor/*.</li>
+  <li>Сторінка порталу /projects/[id]/edit показує редактор у iframe на тому ж домені.</li>
+  <li>Звʼязок портал ↔ редактор — через postMessage, не через DOM.</li>
+</ol>
+
+<h2>3.2. Як працює збереження (ключове рішення)</h2>
+
+<p><b>Не працює:</b> iframe з wickeditor.com і «перехопити кнопку Save». Браузер блокує доступ до чужого origin.</p>
+
+<p><b>Працює:</b> Wick уже передбачив платформний хук у src/files/filehandler.js. До завантаження редактора підміняємо window.saveFileFromWick: замість download на диск файл (Blob .wick) іде батьківському вікну → API Next.js → Supabase Storage.</p>
+
+<p>Це офіційний патерн Wick (так зроблено для desktop). Ядро редактора не чіпаємо — лише один файл-міст.</p>
+
+<h2>3.3. Потік Save / Load</h2>
+
+<p><b>Save</b></p>
+<ol>
+  <li>Учень натискає Save.</li>
+  <li>Wick серіалізує проєкт у Blob (.wick).</li>
+  <li>window.saveFileFromWick → postMessage → батьківське вікно (Next.js).</li>
+  <li>POST /api/projects/[id]/save → Supabase Storage + оновлення Postgres.</li>
+  <li>Відповідь «ok» → Wick показує успіх учню.</li>
+</ol>
+
+<p><b>Load</b></p>
+<ol>
+  <li>Next.js завантажує .wick зі Storage.</li>
+  <li>postMessage → iframe → існуючий API Wick (importProjectAsWickFile).</li>
+  <li>Редактор готовий до роботи.</li>
+</ol>
+
+<p><b>Правило безпеки:</b> Save в хмару дозволений лише після успішного Load. Інакше порожній проєкт може перезаписати збережену роботу.</p>
+
+<p>Перші задачі розробки — fork Wick, міст Save/Load і перевірка циклу: відкрити → намалювати → зберегти → перезавантажити → малюнок на місці. Далі — кабінет і акаунти.</p>
+
+<h1>4. Ліцензія Wick Editor (GPLv3)</h1>
+
+<p>Wick Editor — GNU GPL v3.</p>
+
+<table border="1" cellpadding="6" cellspacing="0">
+  <tr>
+    <th>Що</th>
+    <th>Вимога</th>
+  </tr>
+  <tr>
+    <td>Форк редактора</td>
+    <td>Залишається GPL, зміни публічні</td>
+  </tr>
+  <tr>
+    <td>Портал WickWorld</td>
+    <td>Окремий додаток. Якщо редактор ізольований (iframe + postMessage), copyleft не поширюється на весь сайт</td>
+  </tr>
+  <tr>
+    <td>Атрибуція</td>
+    <td>Згадка Wick Editor / Wicklets у футері або на сторінці «Про редактор»</td>
+  </tr>
+</table>
+
+<p>Перед запуском у продакшен варто коротко проконсультуватися з юристом щодо GPL і дитячої платформи. Для навчального MVP ризик прийнятний.</p>
+
+<h1>5. Roadmap</h1>
+
+<p>Три етапи. Інтеграція редактора входить у Етап 1, окремого «спайку без UI» немає.</p>
+
+<h2>Етап 1 — MVP для уроків (орієнтовно 5–7 тижнів)</h2>
+
+<p><b>Мета:</b> учень має акаунт, список проєктів, редактор з хмарним збереженням. Можна використовувати на уроці.</p>
+
+<table border="1" cellpadding="6" cellspacing="0">
+  <tr>
+    <th>#</th>
+    <th>Функція</th>
+    <th>Деталі</th>
+  </tr>
+  <tr>
+    <td>1.1</td>
+    <td>Fork Wick Editor</td>
+    <td>gromko/wick-editor від Wicklets, upstream налаштовано, версія зафіксована</td>
+  </tr>
+  <tr>
+    <td>1.2</td>
+    <td>Міст Save/Load</td>
+    <td>Override saveFileFromWick + Load через postMessage</td>
+  </tr>
+  <tr>
+    <td>1.3</td>
+    <td>Перевірка циклу</td>
+    <td>Load → малювання → Save → reload → малюнок на місці</td>
+  </tr>
+  <tr>
+    <td>1.4</td>
+    <td>Next.js scaffold</td>
+    <td>App Router, TypeScript, клієнт Supabase</td>
+  </tr>
+  <tr>
+    <td>1.5</td>
+    <td>Auth</td>
+    <td>Email + пароль (Supabase Auth), мінімальна реєстрація</td>
+  </tr>
+  <tr>
+    <td>1.6</td>
+    <td>Проєкти</td>
+    <td>Створити / перейменувати / видалити / список «Мої проєкти»</td>
+  </tr>
+  <tr>
+    <td>1.7</td>
+    <td>Storage</td>
+    <td>.wick у бакет projects/{userId}/{projectId}.wick</td>
+  </tr>
+  <tr>
+    <td>1.8</td>
+    <td>Редактор на порталі</td>
+    <td>/projects/[id]/edit → iframe /editor</td>
+  </tr>
+  <tr>
+    <td>1.9</td>
+    <td>Ліміти</td>
+    <td>Макс. розмір файлу (напр. 25 MB), макс. проєктів на учня (напр. 20)</td>
+  </tr>
+  <tr>
+    <td>1.10</td>
+    <td>RLS</td>
+    <td>Учень бачить лише свої проєкти</td>
+  </tr>
+  <tr>
+    <td>1.11</td>
+    <td>Deploy</td>
+    <td>Vercel + Supabase, env vars</td>
+  </tr>
+</table>
+
+<p><b>Не входить у Етап 1:</b> галерея, ремікс, уроки, кабінет вчителя, коментарі.</p>
+
+<p><b>Компроміс для уроків:</b> кнопка «Показати вчителю» — посилання лише для перегляду (без окремого кабінету вчителя).</p>
+
+<h2>Етап 2 — Спільнота (орієнтовно 4–6 тижнів)</h2>
+
+<p><b>Мета:</b> діти публікують роботи, дивляться чужі, роблять ремікси.</p>
+
+<table border="1" cellpadding="6" cellspacing="0">
+  <tr>
+    <th>#</th>
+    <th>Функція</th>
+  </tr>
+  <tr>
+    <td>2.1</td>
+    <td>Публічна галерея (головна сторінка з макету)</td>
+  </tr>
+  <tr>
+    <td>2.2</td>
+    <td>Статус проєкту: private / public</td>
+  </tr>
+  <tr>
+    <td>2.3</td>
+    <td>Перегляд чужого проєкту (HTML-експорт або embed player)</td>
+  </tr>
+  <tr>
+    <td>2.4</td>
+    <td>Ремікс: копія .wick собі + посилання на автора оригіналу</td>
+  </tr>
+  <tr>
+    <td>2.5</td>
+    <td>Базова модерація: скарга / приховати проєкт</td>
+  </tr>
+</table>
+
+<h2>Етап 3 — Освіта (6+ тижнів)</h2>
+
+<p><b>Мета:</b> структуроване навчання, гейміфікація, інструменти для вчителя.</p>
+
+<table border="1" cellpadding="6" cellspacing="0">
+  <tr>
+    <th>#</th>
+    <th>Функція</th>
+  </tr>
+  <tr>
+    <td>3.1</td>
+    <td>Курси / уроки (контент + завдання)</td>
+  </tr>
+  <tr>
+    <td>3.2</td>
+    <td>Лабораторія (як у макеті)</td>
+  </tr>
+  <tr>
+    <td>3.3</td>
+    <td>Гейміфікація: бейджі, прогрес</td>
+  </tr>
+  <tr>
+    <td>3.4</td>
+    <td>Кабінет вчителя: клас, список учнів, перегляд робіт</td>
+  </tr>
+  <tr>
+    <td>3.5</td>
+    <td>Кабінет модератора</td>
+  </tr>
+</table>
+
+<h1>6. Модель даних (MVP)</h1>
+
+<p><b>profiles</b> (розширення Supabase Auth)</p>
+<ul>
+  <li>id — uuid, PK, посилання на auth.users</li>
+  <li>display_name — text</li>
+  <li>created_at — timestamptz</li>
+</ul>
+
+<p><b>projects</b></p>
+<ul>
+  <li>id — uuid, PK</li>
+  <li>user_id — uuid, FK → profiles</li>
+  <li>title — text</li>
+  <li>storage_path — text (projects/{user_id}/{id}.wick)</li>
+  <li>visibility — private / public (за замовчуванням private)</li>
+  <li>remix_of — uuid, nullable, FK → projects</li>
+  <li>created_at, updated_at — timestamptz</li>
+</ul>
+
+<p><b>Storage bucket:</b> projects. Політика: власник шляху = user_id з JWT.</p>
+
+<h1>7. Інфраструктура та вартість (старт)</h1>
+
+<table border="1" cellpadding="6" cellspacing="0">
+  <tr>
+    <th>Сервіс</th>
+    <th>Тариф</th>
+    <th>Орієнтовні ліміти</th>
+  </tr>
+  <tr>
+    <td>Vercel</td>
+    <td>Hobby (безкоштовно)</td>
+    <td>Достатньо для пілоту в одній школі</td>
+  </tr>
+  <tr>
+    <td>Supabase</td>
+    <td>Free tier</td>
+    <td>500 MB DB, 1 GB Storage, 50k MAU</td>
+  </tr>
+  <tr>
+    <td>GitHub</td>
+    <td>Free</td>
+    <td>2 репо (wickworld + wick-editor)</td>
+  </tr>
+</table>
+
+<p><b>Коли платити:</b> коли Storage перевищить 1 GB або знадобиться custom domain і більше трафіку.</p>
+
+<h1>8. Ризики та мітигація</h1>
+
+<table border="1" cellpadding="6" cellspacing="0">
+  <tr>
+    <th>Ризик</th>
+    <th>Ймовірність</th>
+    <th>Мітигація</th>
+  </tr>
+  <tr>
+    <td>Wick оновлюється і ламає наш патч</td>
+    <td>Середня</td>
+    <td>Пін версії upstream; оновлення свідомо, не auto-merge</td>
+  </tr>
+  <tr>
+    <td>.wick файли великі (звук, картинки)</td>
+    <td>Висока</td>
+    <td>Ліміт розміру; превʼю = PNG, не повний HTML</td>
+  </tr>
+  <tr>
+    <td>GPL copyleft на весь портал</td>
+    <td>Низька</td>
+    <td>Редактор ізольований (iframe + postMessage)</td>
+  </tr>
+  <tr>
+    <td>Дитяча безпека / модерація</td>
+    <td>Висока (етап 2+)</td>
+    <td>Спочатку лише private; модерація перед публікацією</td>
+  </tr>
+  <tr>
+    <td>Autosave Wick vs хмара</td>
+    <td>Середня</td>
+    <td>MVP: явний Save; автозбереження в хмару — після стабільного циклу</td>
+  </tr>
+  <tr>
+    <td>Старий стек Wick (React 16, node-sass)</td>
+    <td>Середня</td>
+    <td>Не чіпаємо; білд з фіксованою версією Node</td>
+  </tr>
+</table>
+
+<h1>9. Питання для обговорення з командою</h1>
+
+<ol>
+  <li><b>Auth для дітей:</b> email + пароль достатньо, чи потрібен вхід через Google / код від вчителя?</li>
+  <li><b>«Показати вчителю»</b> — достатній компроміс для Етапу 1, чи одразу потрібен клас / група?</li>
+  <li><b>Домен:</b> wickworld.com.ua чи піддомен на існуючому?</li>
+  <li><b>Модерація (етап 2):</b> хто модерує — команда чи волонтери-вчителі?</li>
+  <li><b>Контент уроків (етап 3):</b> хто пише — методисти, вчителі, чи спочатку 3–5 demo-уроків від нас?</li>
+</ol>
+
+<h1>10. Наступні кроки після схвалення плану</h1>
+
+<ul>
+  <li>☐ Команда схвалює план</li>
+  <li>☐ Створити fork gromko/wick-editor</li>
+  <li>☐ Міст Save/Load і перевірка циклу збереження</li>
+  <li>☐ Scaffold Next.js + Supabase</li>
+  <li>☐ Перенести HTML-макет у Next.js (головна сторінка)</li>
+  <li>☐ Deploy на Vercel, пілот у 1 класі</li>
+</ul>
+
+<h1>Додаток A. Схема компонентів (MVP)</h1>
+
+<p><b>Vercel</b> (сайт порталу)</p>
+<ul>
+  <li>Next.js: сторінки кабінету, /projects/[id]/edit, API routes</li>
+  <li>Wick Editor: статичний білд на /editor/* у iframe</li>
+  <li>Між ними: postMessage (Save / Load)</li>
+</ul>
+
+<p><b>Supabase</b></p>
+<ul>
+  <li>Auth — користувачі</li>
+  <li>Postgres — таблиця projects</li>
+  <li>Storage — файли .wick</li>
+</ul>
+
+<h1>Додаток B. Що вже є в репозиторії</h1>
+
+<table border="1" cellpadding="6" cellspacing="0">
+  <tr>
+    <th>Файл</th>
+    <th>Стан</th>
+  </tr>
+  <tr>
+    <td>wickworld.html</td>
+    <td>Готовий UI-макет головної (українською)</td>
+  </tr>
+  <tr>
+    <td>styles.css</td>
+    <td>Стилі макету, адаптив</td>
+  </tr>
+  <tr>
+    <td>images/wwimage.png</td>
+    <td>Фон hero</td>
+  </tr>
+  <tr>
+    <td>README.md</td>
+    <td>Концепція продукту</td>
+  </tr>
+</table>
+
+<p>Макет можна перенести в Next.js на Етапі 1 — дизайн уже є.</p>
+
+<p>Питання та правки — у коментарях до документа або в чаті команди.</p>
+
+</body>
+</html>

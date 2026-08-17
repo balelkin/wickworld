@@ -1,0 +1,108 @@
+{
+  "meta": {
+    "title": "WickWorld",
+    "description": "Український дитячий портал для анімації та ігор на базі Wick Editor."
+  },
+  "nav": {
+    "create": "Створити",
+    "explore": "Досліджувати",
+    "projects": "Проєкти",
+    "login": "Увійти",
+    "join": "Приєднатися",
+    "logout": "Вийти",
+    "openMenu": "Відкрити меню",
+    "closeMenu": "Закрити меню",
+    "language": "Мова"
+  },
+  "locale": {
+    "uk": "Українська",
+    "en": "English"
+  },
+  "hero": {
+    "title": "Творити,\nвивчати,\nділитись",
+    "body": "Створюй анімації та ігри в Wick Editor. Зберігай у хмарі на WickWorld — без файлів на диску учня.",
+    "ctaCreate": "Створити проєкт",
+    "ctaLogin": "Увійти",
+    "features": {
+      "simple": {
+        "title": "Просто та весело",
+        "body": "Інтуїтивний редактор для створення анімацій та ігор."
+      },
+      "learn": {
+        "title": "Навчайся граючись",
+        "body": "Покрокові уроки та приклади допоможуть стати майстром анімації."
+      },
+      "share": {
+        "title": "Ділись з друзями",
+        "body": "Публікуй проєкти, отримуй відгуки та надихай спільноту."
+      }
+    }
+  },
+  "home": {
+    "galleryTitle": "Галерея зʼявиться на етапі 2",
+    "galleryBody": "Зараз будуємо кабінет і хмарне збереження. Макет карток лишився в wickworld.html як референс."
+  },
+  "footer": {
+    "community": "Спільнота WickWorld",
+    "tagline": "Твори разом з нами!",
+    "attribution": "Редактор — Wick Editor (Wicklets), GPL v3"
+  },
+  "auth": {
+    "loginTitle": "Увійти",
+    "loginDescription": "Увійди email і паролем, щоб відкрити свої проєкти.",
+    "loginAction": "Немає акаунту? Реєстрація",
+    "registerTitle": "Приєднатися",
+    "registerDescription": "Створи акаунт. Пароль — щонайменше 8 символів.",
+    "registerAction": "Вже є акаунт? Увійти",
+    "email": "Email",
+    "password": "Пароль",
+    "displayName": "Імʼя",
+    "pending": "Зачекай…",
+    "submitLogin": "Увійти",
+    "submitRegister": "Створити акаунт",
+    "errors": {
+      "notConfigured": "Supabase ще не налаштований. Додай ключі в .env.local (див. supabase/README.md).",
+      "missingFields": "Заповни всі поля.",
+      "invalidCredentials": "Невірний email або пароль.",
+      "passwordShort": "Пароль має бути щонайменше 8 символів.",
+      "signUpFailed": "Не вдалося створити акаунт. Спробуй інший email."
+    },
+    "notices": {
+      "checkEmail": "Перевір пошту, щоб підтвердити акаунт."
+    }
+  },
+  "projects": {
+    "title": "Мої проєкти",
+    "metaTitle": "Мої проєкти",
+    "description": "До {maxProjects} проєктів, файл до {maxMb} МБ. Хмарний файл зʼявиться після підключення редактора.",
+    "create": "Створити проєкт",
+    "creating": "Створюємо…",
+    "defaultTitle": "Новий проєкт",
+    "empty": "Ще немає проєктів. Створи перший — відкриється заглушка редактора.",
+    "private": "Приватний",
+    "rename": "Перейменувати",
+    "renamePrompt": "Нова назва проєкту",
+    "delete": "Видалити",
+    "confirmDelete": "Видалити цей проєкт? Це не можна скасувати.",
+    "errors": {
+      "notConfigured": "Supabase ще не налаштований. Додай ключі в .env.local.",
+      "createFailed": "Не вдалося створити проєкт.",
+      "limitReached": "Досягнуто ліміт проєктів.",
+      "missingTitle": "Назва не може бути порожньою.",
+      "renameFailed": "Не вдалося перейменувати проєкт."
+    }
+  },
+  "editor": {
+    "metaTitle": "Редактор",
+    "pageTitle": "Редактор проєкту",
+    "pageDescription": "Хмарний Save/Load зʼявиться після форку Wick і API Storage.",
+    "label": "Редактор",
+    "notConnected": "Wick Editor ще не підключений",
+    "notConnectedBody": "Тут буде iframe з нашим білдом форку. Save/Load піде через типізований протокол wickworld:*."
+  },
+  "notFound": {
+    "title": "Сторінку не знайдено",
+    "body": "Перевір адресу або повернись на головну.",
+    "home": "На головну"
+  }
+}

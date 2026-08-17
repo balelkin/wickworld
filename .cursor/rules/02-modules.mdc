@@ -1,0 +1,12 @@
+---
+description: Модульні імпорти порталу WickWorld
+globs: src/**/*.{ts,tsx}
+alwaysApply: false
+---
+
+# Модулі
+
+- Зовні модуля імпортуй лише `@/modules/<name>`.
+- `app` → `modules` → `shared`. `shared` не тягне модулі.
+- `"use client"` лише де є стан або браузерні API.
+- Нові доменні ID — branded types у `shared/types` або в модулі.

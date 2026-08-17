@@ -1,0 +1,37 @@
+@import "tailwindcss";
+
+:root {
+  --navy-1: #16247a;
+  --navy-2: #2452d6;
+  --blue: #4a7cf7;
+  --ink: #0c1a3d;
+  --muted: #5a6b8c;
+  --background: #f4f7fd;
+  --foreground: #0c1a3d;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-nunito);
+  --font-display: var(--font-baloo);
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-nunito), system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+@media (max-width: 767px) {
+  body {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+}

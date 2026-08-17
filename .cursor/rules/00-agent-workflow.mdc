@@ -1,0 +1,19 @@
+---
+description: Обовʼязковий цикл задачі WickWorld — опис, spec, лог, memory bank
+alwaysApply: true
+---
+
+# Цикл роботи агента
+
+Перед кодом прочитай `AGENTS.md`, `memory-bank/activeContext.md`, `memory-bank/progress.md`.
+
+Порядок незмінний:
+
+1. Опиши задачу в `docs/tasks/YYYY-MM-DD-<slug>.md` (шаблон `_TEMPLATE.md`). Покажи людині. Чекай погодження.
+2. Погоди специфікацію в `docs/specs/`. Архітектурні зміни — окреме «ок».
+3. Реалізуй лише погоджений обсяг.
+4. Допиши `memory-bank/progress.md`.
+5. Онови memory bank (`activeContext.md`, за потреби `decisions.md` і контекстні файли).
+
+Не пиши код у тому ж ході, що й перший опис задачі, якщо людина не сказала «роби».
+Не коміть без явного прохання.

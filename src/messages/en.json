@@ -1,0 +1,108 @@
+{
+  "meta": {
+    "title": "WickWorld",
+    "description": "A Ukrainian kids portal for animation and games, powered by Wick Editor."
+  },
+  "nav": {
+    "create": "Create",
+    "explore": "Explore",
+    "projects": "Projects",
+    "login": "Log in",
+    "join": "Join",
+    "logout": "Log out",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "language": "Language"
+  },
+  "locale": {
+    "uk": "Українська",
+    "en": "English"
+  },
+  "hero": {
+    "title": "Create,\nlearn,\nshare",
+    "body": "Make animations and games in Wick Editor. Save to the WickWorld cloud — no files on the student’s disk.",
+    "ctaCreate": "Create a project",
+    "ctaLogin": "Log in",
+    "features": {
+      "simple": {
+        "title": "Simple and fun",
+        "body": "An intuitive editor for animations and games."
+      },
+      "learn": {
+        "title": "Learn by playing",
+        "body": "Step-by-step lessons help you become an animation maker."
+      },
+      "share": {
+        "title": "Share with friends",
+        "body": "Publish projects, get feedback, and inspire the community."
+      }
+    }
+  },
+  "home": {
+    "galleryTitle": "The gallery comes in stage 2",
+    "galleryBody": "We are building accounts and cloud save first. The card mockup remains in wickworld.html as a reference."
+  },
+  "footer": {
+    "community": "WickWorld community",
+    "tagline": "Create with us!",
+    "attribution": "Editor — Wick Editor (Wicklets), GPL v3"
+  },
+  "auth": {
+    "loginTitle": "Log in",
+    "loginDescription": "Sign in with email and password to open your projects.",
+    "loginAction": "No account? Register",
+    "registerTitle": "Join",
+    "registerDescription": "Create an account. Password must be at least 8 characters.",
+    "registerAction": "Already have an account? Log in",
+    "email": "Email",
+    "password": "Password",
+    "displayName": "Name",
+    "pending": "Please wait…",
+    "submitLogin": "Log in",
+    "submitRegister": "Create account",
+    "errors": {
+      "notConfigured": "Supabase is not configured. Add keys to .env.local (see supabase/README.md).",
+      "missingFields": "Please fill in all fields.",
+      "invalidCredentials": "Wrong email or password.",
+      "passwordShort": "Password must be at least 8 characters.",
+      "signUpFailed": "Could not create the account. Try a different email."
+    },
+    "notices": {
+      "checkEmail": "Check your email to confirm the account."
+    }
+  },
+  "projects": {
+    "title": "My projects",
+    "metaTitle": "My projects",
+    "description": "Up to {maxProjects} projects, files up to {maxMb} MB. Cloud files land after the editor is connected.",
+    "create": "Create a project",
+    "creating": "Creating…",
+    "defaultTitle": "New project",
+    "empty": "No projects yet. Create one — the editor opens as a placeholder.",
+    "private": "Private",
+    "rename": "Rename",
+    "renamePrompt": "New project title",
+    "delete": "Delete",
+    "confirmDelete": "Delete this project? This cannot be undone.",
+    "errors": {
+      "notConfigured": "Supabase is not configured. Add keys to .env.local.",
+      "createFailed": "Could not create the project.",
+      "limitReached": "Project limit reached.",
+      "missingTitle": "Title cannot be empty.",
+      "renameFailed": "Could not rename the project."
+    }
+  },
+  "editor": {
+    "metaTitle": "Editor",
+    "pageTitle": "Project editor",
+    "pageDescription": "Cloud Save/Load will land after the Wick fork and Storage API.",
+    "label": "Editor",
+    "notConnected": "Wick Editor is not connected yet",
+    "notConnectedBody": "This is where the forked editor iframe will load. Save/Load will use the typed wickworld:* protocol."
+  },
+  "notFound": {
+    "title": "Page not found",
+    "body": "Check the address or go back home.",
+    "home": "Home"
+  }
+}
