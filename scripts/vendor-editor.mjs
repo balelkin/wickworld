@@ -64,6 +64,10 @@ html = html.replace(
   '<script src="./corelibs/wick-engine/wickengine.js"></script>',
   '<script src="./corelibs/wick-engine/wickengine.js"></script><script src="./wickworld-bridge.js"></script>',
 );
+// `/editor` without a trailing slash resolves `./static/...` to `/static/...` (404).
+html = html.replaceAll('="./', '="/editor/');
+html = html.replaceAll("url('./", "url('/editor/");
+html = html.replace('f.p="./"', 'f.p="/editor/"');
 writeFileSync(indexPath, html);
 
 writeFileSync(

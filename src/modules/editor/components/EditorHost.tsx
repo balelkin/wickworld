@@ -19,7 +19,7 @@ export type EditorHostProps = {
 
 export function EditorHost({
   projectId,
-  editorSrc = "/editor/",
+  editorSrc = "/editor/index.html",
 }: EditorHostProps) {
   const t = useTranslations("editor");
   const iframeRef = useRef<HTMLIFrameElement>(null);

@@ -5,7 +5,7 @@
 **Зараз:**
 
 - Форк: https://github.com/balelkin/wick-editor (міст `wickworld-bridge.js`).
-- Портал віддає статику `/editor` (vendor з Wick `gh-pages` + міст).
+- Портал віддає статику `/editor` (абсолютні асети `/editor/...`, iframe на `index.html`).
 - `GET/POST /api/projects/[id]/file|save`. Cloud Save лише після Load.
 - Auth на проді все ще потребує ключів Vercel.
 

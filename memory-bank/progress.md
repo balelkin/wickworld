@@ -13,6 +13,16 @@
 
 ---
 
+## 2026-08-18 — фікс шляхів `/editor`
+
+- Задача: `docs/tasks/2026-08-18-editor-asset-paths.md`
+- Зроблено: vendored HTML з абсолютними `/editor/...`; iframe `src=/editor/index.html`. Vercel зрізав слеш і JS йшов на `/static` (404) — лишався лише прелоадер.
+- Перевірка: `npm run lint` OK, `npm run typecheck` OK; локально в HTML є `src="/editor/static/js/main` і `f.p="/editor/"`.
+- Memory bank: active.
+- Далі: пуш у прод; hard refresh `/editor`.
+
+---
+
 ## 2026-08-18 — Wick iframe + Save/Load
 
 - Задача: `docs/tasks/2026-08-18-wick-save-load.md`

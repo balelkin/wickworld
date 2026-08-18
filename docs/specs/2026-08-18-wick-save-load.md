@@ -27,7 +27,7 @@ Origin: лише `event.origin === window.location.origin`.
 
 ## Портал
 
-- `EditorHost`: iframe `src="/editor/?projectId=…"`
+- `EditorHost`: iframe `src="/editor/index.html?projectId=…"` (не `/editor/` — Vercel зрізає слеш і ламає відносні асети)
 - `GET /api/projects/[id]/file` — `.wick` власнику; 404 якщо файлу ще немає (тоді load-empty)
 - `POST /api/projects/[id]/save` — тіло bytes, max 25 MB, лише власник
 - Storage key як у схемі: `{userId}/{projectId}.wick` у бакеті `projects`
